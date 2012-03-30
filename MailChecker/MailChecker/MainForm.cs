@@ -210,6 +210,7 @@ namespace MailChecker
             {
                 //Start launcher
                 //Should be implemented soon
+                //git push test
             }
         }
 

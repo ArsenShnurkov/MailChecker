@@ -52,3 +52,6 @@ c:\Users\meehi_dell\.ssh\MailChecker\MailChecker\obj\x86\Release\MailChecker.Pro
 c:\Users\meehi_dell\.ssh\MailChecker\MailChecker\obj\x86\Release\GenerateResource.read.1.tlog
 c:\Users\meehi_dell\.ssh\MailChecker\MailChecker\obj\x86\Release\GenerateResource.write.1.tlog
 c:\Users\meehi_dell\.ssh\MailChecker\MailChecker\bin\Release\Updater.dll
+d:\documents\sugarsync\Mail\MailChecker\MailChecker\bin\Release\MailChecker.exe.config
+d:\documents\sugarsync\Mail\MailChecker\MailChecker\obj\x86\Release\MailChecker.exe
+d:\documents\sugarsync\Mail\MailChecker\MailChecker\obj\x86\Release\MailChecker.pdb
