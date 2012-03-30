@@ -1,0 +1,52 @@
+D:\documents\programozás\Visual Studio Projects\MailChecker\MailChecker\bin\Debug\MailChecker.exe
+D:\documents\programozás\Visual Studio Projects\MailChecker\MailChecker\bin\Debug\MailChecker.pdb
+D:\documents\programozás\Visual Studio Projects\MailChecker\MailChecker\bin\Debug\ImapX.dll
+D:\documents\programozás\Visual Studio Projects\MailChecker\MailChecker\bin\Debug\System.Data.SQLite.dll
+D:\documents\programozás\Visual Studio Projects\MailChecker\MailChecker\bin\Debug\System.Data.SQLite.pdb
+D:\documents\programozás\Visual Studio Projects\MailChecker\MailChecker\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\documents\programozás\Visual Studio Projects\MailChecker\MailChecker\obj\x86\Debug\MailChecker.MainForm.resources
+D:\documents\programozás\Visual Studio Projects\MailChecker\MailChecker\obj\x86\Debug\MailChecker.Properties.Resources.resources
+D:\documents\programozás\Visual Studio Projects\MailChecker\MailChecker\obj\x86\Debug\GenerateResource.read.1.tlog
+D:\documents\programozás\Visual Studio Projects\MailChecker\MailChecker\obj\x86\Debug\GenerateResource.write.1.tlog
+D:\documents\programozás\Visual Studio Projects\MailChecker\MailChecker\obj\x86\Debug\MailChecker.exe
+D:\documents\programozás\Visual Studio Projects\MailChecker\MailChecker\obj\x86\Debug\MailChecker.pdb
+d:\documents\programozás\Visual Studio Projects\MailChecker\MailChecker\bin\Debug\IniFiles.dll
+d:\documents\programozás\Visual Studio Projects\MailChecker\MailChecker\bin\Debug\IniFiles.pdb
+d:\documents\programozás\Visual Studio Projects\MailChecker\MailChecker\bin\Debug\IniFiles.xml
+d:\documents\programozás\Visual Studio Projects\Projects\MailChecker\MailChecker\bin\Debug\MailChecker.exe.config
+d:\documents\programozás\Visual Studio Projects\Projects\MailChecker\MailChecker\bin\Debug\MailChecker.exe
+d:\documents\programozás\Visual Studio Projects\Projects\MailChecker\MailChecker\bin\Debug\MailChecker.pdb
+d:\documents\programozás\Visual Studio Projects\Projects\MailChecker\MailChecker\bin\Debug\AE.Net.Mail.dll
+d:\documents\programozás\Visual Studio Projects\Projects\MailChecker\MailChecker\bin\Debug\IniFiles.dll
+d:\documents\programozás\Visual Studio Projects\Projects\MailChecker\MailChecker\bin\Debug\Updater.dll
+d:\documents\programozás\Visual Studio Projects\Projects\MailChecker\MailChecker\bin\Debug\AE.Net.Mail.pdb
+d:\documents\programozás\Visual Studio Projects\Projects\MailChecker\MailChecker\bin\Debug\IniFiles.pdb
+d:\documents\programozás\Visual Studio Projects\Projects\MailChecker\MailChecker\bin\Debug\IniFiles.xml
+d:\documents\programozás\Visual Studio Projects\Projects\MailChecker\MailChecker\bin\Debug\Updater.pdb
+d:\documents\programozás\Visual Studio Projects\Projects\MailChecker\MailChecker\obj\x86\Debug\ResolveAssemblyReference.cache
+d:\documents\programozás\Visual Studio Projects\Projects\MailChecker\MailChecker\obj\x86\Debug\MailChecker.AddAccountForm.resources
+d:\documents\programozás\Visual Studio Projects\Projects\MailChecker\MailChecker\obj\x86\Debug\MailChecker.AlertForm.resources
+d:\documents\programozás\Visual Studio Projects\Projects\MailChecker\MailChecker\obj\x86\Debug\MailChecker.MainForm.resources
+d:\documents\programozás\Visual Studio Projects\Projects\MailChecker\MailChecker\obj\x86\Debug\MailChecker.Properties.Resources.resources
+d:\documents\programozás\Visual Studio Projects\Projects\MailChecker\MailChecker\obj\x86\Debug\GenerateResource.read.1.tlog
+d:\documents\programozás\Visual Studio Projects\Projects\MailChecker\MailChecker\obj\x86\Debug\GenerateResource.write.1.tlog
+d:\documents\programozás\Visual Studio Projects\Projects\MailChecker\MailChecker\obj\x86\Debug\MailChecker.exe
+d:\documents\programozás\Visual Studio Projects\Projects\MailChecker\MailChecker\obj\x86\Debug\MailChecker.pdb
+d:\documents\sugarsync\MailChecker\MailChecker\bin\Debug\MailChecker.exe.config
+d:\documents\sugarsync\MailChecker\MailChecker\obj\x86\Debug\ResolveAssemblyReference.cache
+d:\documents\sugarsync\MailChecker\MailChecker\obj\x86\Debug\MailChecker.AddAccountForm.resources
+d:\documents\sugarsync\MailChecker\MailChecker\obj\x86\Debug\MailChecker.AlertForm.resources
+d:\documents\sugarsync\MailChecker\MailChecker\obj\x86\Debug\MailChecker.MainForm.resources
+d:\documents\sugarsync\MailChecker\MailChecker\obj\x86\Debug\MailChecker.Properties.Resources.resources
+d:\documents\sugarsync\MailChecker\MailChecker\obj\x86\Debug\GenerateResource.read.1.tlog
+d:\documents\sugarsync\MailChecker\MailChecker\obj\x86\Debug\GenerateResource.write.1.tlog
+d:\documents\sugarsync\MailChecker\MailChecker\bin\Debug\MailChecker.exe
+d:\documents\sugarsync\MailChecker\MailChecker\bin\Debug\MailChecker.pdb
+d:\documents\sugarsync\MailChecker\MailChecker\bin\Debug\aenetmail_csharp.dll
+d:\documents\sugarsync\MailChecker\MailChecker\bin\Debug\Ini.dll
+d:\documents\sugarsync\MailChecker\MailChecker\bin\Debug\Updater.dll
+d:\documents\sugarsync\MailChecker\MailChecker\bin\Debug\aenetmail_csharp.pdb
+d:\documents\sugarsync\MailChecker\MailChecker\bin\Debug\Ini.pdb
+d:\documents\sugarsync\MailChecker\MailChecker\bin\Debug\Updater.pdb
+d:\documents\sugarsync\MailChecker\MailChecker\obj\x86\Debug\MailChecker.exe
+d:\documents\sugarsync\MailChecker\MailChecker\obj\x86\Debug\MailChecker.pdb
