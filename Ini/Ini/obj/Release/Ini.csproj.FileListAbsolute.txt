@@ -1,0 +1,5 @@
+D:\documents\sugarsync\Ini\Ini\bin\Release\Ini.dll
+D:\documents\sugarsync\Ini\Ini\bin\Release\Ini.pdb
+D:\documents\sugarsync\Ini\Ini\obj\Release\ResolveAssemblyReference.cache
+D:\documents\sugarsync\Ini\Ini\obj\Release\Ini.dll
+D:\documents\sugarsync\Ini\Ini\obj\Release\Ini.pdb

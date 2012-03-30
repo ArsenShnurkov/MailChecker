@@ -209,7 +209,7 @@ namespace MailChecker
             else
             {
                 //Start launcher
-                //Should be implemented
+                //Should be implemented soon
             }
         }
 

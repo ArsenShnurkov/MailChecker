@@ -1,0 +1,20 @@
+D:\documents\programozás\Visual Studio Projects\Projects\Updater\Updater\bin\Debug\Updater.dll
+D:\documents\programozás\Visual Studio Projects\Projects\Updater\Updater\bin\Debug\Updater.pdb
+D:\documents\programozás\Visual Studio Projects\Projects\Updater\Updater\obj\Debug\ResolveAssemblyReference.cache
+D:\documents\programozás\Visual Studio Projects\Projects\Updater\Updater\obj\Debug\Updater.dll
+D:\documents\programozás\Visual Studio Projects\Projects\Updater\Updater\obj\Debug\Updater.pdb
+d:\documents\programozás\Visual Studio Projects\Projects\Updater\Updater\obj\Debug\Updater.UpdateForm.resources
+d:\documents\programozás\Visual Studio Projects\Projects\Updater\Updater\obj\Debug\GenerateResource.read.1.tlog
+d:\documents\programozás\Visual Studio Projects\Projects\Updater\Updater\obj\Debug\GenerateResource.write.1.tlog
+d:\documents\programozás\Visual Studio Projects\Projects\Updater\Updater\obj\Debug\Updater.AboutForm.resources
+d:\documents\programozás\Visual Studio Projects\Projects\Updater\Updater\obj\Debug\Updater.Properties.Resources.resources
+d:\documents\sugarsync\Updater\Updater\bin\Debug\Updater.dll
+d:\documents\sugarsync\Updater\Updater\bin\Debug\Updater.pdb
+d:\documents\sugarsync\Updater\Updater\obj\Debug\ResolveAssemblyReference.cache
+d:\documents\sugarsync\Updater\Updater\obj\Debug\Updater.AboutForm.resources
+d:\documents\sugarsync\Updater\Updater\obj\Debug\Updater.Properties.Resources.resources
+d:\documents\sugarsync\Updater\Updater\obj\Debug\Updater.UpdateForm.resources
+d:\documents\sugarsync\Updater\Updater\obj\Debug\GenerateResource.read.1.tlog
+d:\documents\sugarsync\Updater\Updater\obj\Debug\GenerateResource.write.1.tlog
+d:\documents\sugarsync\Updater\Updater\obj\Debug\Updater.dll
+d:\documents\sugarsync\Updater\Updater\obj\Debug\Updater.pdb
