@@ -3,3 +3,8 @@ D:\documents\sugarsync\aenetmail_csharp\aenetmail_csharp\bin\Debug\aenetmail_csh
 D:\documents\sugarsync\aenetmail_csharp\aenetmail_csharp\obj\Debug\ResolveAssemblyReference.cache
 D:\documents\sugarsync\aenetmail_csharp\aenetmail_csharp\obj\Debug\aenetmail_csharp.dll
 D:\documents\sugarsync\aenetmail_csharp\aenetmail_csharp\obj\Debug\aenetmail_csharp.pdb
+d:\documents\sugarsync\MailChecker\aenetmail_csharp\aenetmail_csharp\bin\Debug\aenetmail_csharp.dll
+d:\documents\sugarsync\MailChecker\aenetmail_csharp\aenetmail_csharp\bin\Debug\aenetmail_csharp.pdb
+d:\documents\sugarsync\MailChecker\aenetmail_csharp\aenetmail_csharp\obj\Debug\ResolveAssemblyReference.cache
+d:\documents\sugarsync\MailChecker\aenetmail_csharp\aenetmail_csharp\obj\Debug\aenetmail_csharp.dll
+d:\documents\sugarsync\MailChecker\aenetmail_csharp\aenetmail_csharp\obj\Debug\aenetmail_csharp.pdb

@@ -1,0 +1,5 @@
+d:\documents\sugarsync\MailChecker\aenetmail_csharp\aenetmail_csharp\bin\Release\aenetmail_csharp.dll
+d:\documents\sugarsync\MailChecker\aenetmail_csharp\aenetmail_csharp\bin\Release\aenetmail_csharp.pdb
+d:\documents\sugarsync\MailChecker\aenetmail_csharp\aenetmail_csharp\obj\Release\ResolveAssemblyReference.cache
+d:\documents\sugarsync\MailChecker\aenetmail_csharp\aenetmail_csharp\obj\Release\aenetmail_csharp.dll
+d:\documents\sugarsync\MailChecker\aenetmail_csharp\aenetmail_csharp\obj\Release\aenetmail_csharp.pdb

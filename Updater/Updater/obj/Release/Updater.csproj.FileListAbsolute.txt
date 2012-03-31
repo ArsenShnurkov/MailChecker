@@ -18,3 +18,13 @@ c:\Users\meehi_dell\.ssh\Updater\Updater\obj\Release\GenerateResource.read.1.tlo
 c:\Users\meehi_dell\.ssh\Updater\Updater\obj\Release\GenerateResource.write.1.tlog
 c:\Users\meehi_dell\.ssh\Updater\Updater\obj\Release\Updater.dll
 c:\Users\meehi_dell\.ssh\Updater\Updater\obj\Release\Updater.pdb
+d:\documents\sugarsync\MailChecker\Updater\Updater\bin\Release\Updater.dll
+d:\documents\sugarsync\MailChecker\Updater\Updater\bin\Release\Updater.pdb
+d:\documents\sugarsync\MailChecker\Updater\Updater\obj\Release\ResolveAssemblyReference.cache
+d:\documents\sugarsync\MailChecker\Updater\Updater\obj\Release\Updater.AboutForm.resources
+d:\documents\sugarsync\MailChecker\Updater\Updater\obj\Release\Updater.Properties.Resources.resources
+d:\documents\sugarsync\MailChecker\Updater\Updater\obj\Release\Updater.UpdateForm.resources
+d:\documents\sugarsync\MailChecker\Updater\Updater\obj\Release\GenerateResource.read.1.tlog
+d:\documents\sugarsync\MailChecker\Updater\Updater\obj\Release\GenerateResource.write.1.tlog
+d:\documents\sugarsync\MailChecker\Updater\Updater\obj\Release\Updater.dll
+d:\documents\sugarsync\MailChecker\Updater\Updater\obj\Release\Updater.pdb

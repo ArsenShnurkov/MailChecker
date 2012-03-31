@@ -157,6 +157,9 @@ namespace Updater
                     return;
                 }
 
+                //New updates are available so we need to stop the further update search
+                Stop_Update();
+                
                 //Confirm download
                 if (!DownloadConfirmed)
                     if (myUpdater.UpdaterConfigurator.ConfirmDownload)
