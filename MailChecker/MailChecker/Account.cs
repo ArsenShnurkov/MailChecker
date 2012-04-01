@@ -105,6 +105,9 @@ namespace MailChecker
                 System.Lazy<MailMessage>[] myMessages = client.SearchMessages(aenetmail_csharp.Imap.SearchCondition.Unseen());
                 foreach (System.Lazy<MailMessage> message in myMessages)
                     myMsg.Add(message.Value);
+                string charset = "";
+                foreach (MailMessage msg in myMsg)
+                    charset = msg.Charset;
                 return myMsg;
             }
             catch

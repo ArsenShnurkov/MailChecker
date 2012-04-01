@@ -43,9 +43,7 @@ namespace aenetmail_csharp
         {
             get
             {
-                return Headers["Content-Transfer-Encoding"]["charset"].NotEmpty(
-                Headers["Content-Type"]["charset"]
-                );
+                return Headers["Content-Transfer-Encoding"]["charset"].NotEmpty(Headers["Content-Type"]["charset"]);
             }
         }
 
@@ -66,7 +64,7 @@ namespace aenetmail_csharp
                 string charset = Charset;
                 if (Charset == "")
                     charset = System.Text.Encoding.Default.BodyName;
-                value = System.Text.Encoding.GetEncoding("iso-8859-2").GetString(Convert.FromBase64String(value));
+                value = System.Text.Encoding.GetEncoding(Charset).GetString(Convert.FromBase64String(value));
 
                 ContentTransferEncoding = string.Empty;
             }

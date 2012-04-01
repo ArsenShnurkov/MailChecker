@@ -10,6 +10,45 @@ namespace aenetmail_csharp
 {
     internal static class Utilities
     {
+        //new
+        internal static int IndexOfArray(Array fullArray, Array innerArray, int start = 0, int end = -1)
+        {
+            int indexOf = -1;
+            int tmp = -1;
+            int j = 0;
+            end = end == -1 ? fullArray.Length - 1 : end;
+            for (int i = start; i <= end; i++)
+            {
+                if (fullArray.GetValue(i).Equals(innerArray.GetValue(j)))
+                {
+                    if (j == 0) { tmp = i; }
+                    else { if (j == innerArray.Length - 1) { indexOf = tmp; break; } }
+                    j++;
+                }
+                else { j = 0; }
+            }
+            return indexOf;
+        }
+        internal static int LastIndexOfArray(Array fullArray, Array innerArray, int start = 0, int end = -1)
+        {
+            int lastIndexOf = -1;
+            int tmp = -1;
+            int j = innerArray.Length - 1;
+            end = end == -1 ? fullArray.Length - 1 : end;
+            for (int i = end; i > start; i--)
+            {
+                if (fullArray.GetValue(i).Equals(innerArray.GetValue(j)))
+                {
+                    if (j == innerArray.Length - 1) { tmp = i; }
+                    else { if (j == 0) { lastIndexOf = tmp; break; } }
+                    j--;
+                }
+                else { j = innerArray.Length - 1; }
+            }
+            return lastIndexOf;
+        }
+        //new end;
+
         internal static void TryDispose<T>(ref T obj) where T : class, IDisposable
         {
             try
