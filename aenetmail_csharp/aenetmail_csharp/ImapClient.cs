@@ -514,75 +514,55 @@ namespace aenetmail_csharp
                 if (imapHeaders["Flags"] != null)
                     mail.SetFlags(imapHeaders["Flags"]);
 
-
                 foreach (var key in imapHeaders.AllKeys.Except(new[] { "UID", "Flags", "BODY[]", "BODY[HEADER]" }, StringComparer.OrdinalIgnoreCase))
                     mail.Headers.Add(key, new HeaderValue(imapHeaders[key]));
 
-                int totalBytes = mail.Size;
-                byte[] bodyBytes = new byte[totalBytes];
-                byte[] buffer = new byte[8192];
-                int remaining = totalBytes;
+                var body = new StringBuilder();
+                int remaining = mail.Size;
+                var buffer = new byte[8192];
                 int read;
-                Encoding tmpEncoding = Encoding.UTF8;
+                string pattern = "charset=";
+                string temp_charset = Encoding.Default.BodyName;
+                string charset = "";
                 while (remaining > 0)
                 {
-                    read = _Stream.Read(buffer, 0, Math.Min(buffer.Length, remaining));
-                    Array.Copy(buffer, 0, bodyBytes, totalBytes - remaining, read);
-                    remaining -= read;
-                }
-                StringBuilder body = new StringBuilder();
-                String rawAscii = Encoding.ASCII.GetString(bodyBytes);
-                String rgxNonAsciiHeaders = @"(((=\?)([^\s\?]+)\?(Q|B)\?)[^(\s|(\?=))]+\?=)";
-                String rgxNonAsciiPart = @"((Content-Type:\s\S+;\scharset=""?)([^\s""]+)(""?(\r\n)|(\n))(Content-Transfer-Encoding:\s(quoted-printable|base64))?)";
-                MatchCollection mc = Regex.Matches(rawAscii, rgxNonAsciiHeaders + "|" + rgxNonAsciiPart, RegexOptions.IgnoreCase);
-                int lastEnd = 0;
-                int encodedTextByteStart = 0;
-                byte[] matchEnd = Encoding.Convert(Encoding.Unicode, Encoding.ASCII, Encoding.Unicode.GetBytes("?="));
-                byte[] matchEnd2 = Encoding.Convert(Encoding.Unicode, Encoding.ASCII, Encoding.Unicode.GetBytes("\r\n"));
-                for (int i = 0; i < mc.Count; i++)
-                {
-                    if (mc[i].Success)
+                    read = _Stream.Read(buffer, 0, Math.Min(remaining, buffer.Length));
+                    string temp_body = System.Text.Encoding.GetEncoding(temp_charset).GetString(buffer, 0, read);
+                    temp_body = temp_body.Replace("\"", "").Replace(" ", "");
+                    if (temp_body.ToLower().Contains(pattern))
                     {
-                        if (String.IsNullOrEmpty(mc[i].Groups[1].Value))
+                        int start_pos = temp_body.IndexOf(pattern) + pattern.Length;
+                        int end_pos = temp_body.IndexOf("\r\n", start_pos);
+                        if (end_pos == -1)
                         {
-                            String ascii = rawAscii.Substring(lastEnd, mc[i].Index + mc[i].Length - lastEnd);
-                            body.Append(ascii);
-                            encodedTextByteStart = lastEnd + Encoding.ASCII.GetByteCount(ascii);
-                            Encoding enc = Encoding.GetEncoding(mc[i].Groups[8].Value);
-                            String encoding = mc[i].Groups[13].Value;
-                            int encodedTextByteEnd;
-                            if (i == mc.Count - 1 || !mc[i + 1].Success)
-                            {
-                                encodedTextByteEnd = Utilities.LastIndexOfArray(bodyBytes, matchEnd2, encodedTextByteStart, bodyBytes.Length - 1 - (matchEnd2.Length + 1));
-                            }
-                            else
-                            {
-                                if (String.IsNullOrEmpty(mc[i + 1].Groups[1].Value))
-                                {
-                                    encodedTextByteEnd = Utilities.IndexOfArray(bodyBytes, Encoding.ASCII.GetBytes(mc[i + 1].Value), encodedTextByteStart);
-
-                                }
-                                else
-                                {
-                                    encodedTextByteEnd = Utilities.IndexOfArray(bodyBytes, Encoding.ASCII.GetBytes(mc[i + 1].Groups[2].Value), encodedTextByteStart);
-                                }
-                            }
-                            body.Append(enc.GetString(bodyBytes, encodedTextByteStart, encodedTextByteEnd - encodedTextByteStart));
+                            end_pos = temp_body.IndexOf("\r", start_pos);
+                            if (end_pos == -1)
+                                end_pos = temp_body.IndexOf(";", start_pos);
                         }
-                        else
+                        if (end_pos != -1)
                         {
-                            String ascii = rawAscii.Substring(lastEnd, mc[i].Index - lastEnd) + mc[i].Groups[2].Value;
-                            body.Append(ascii);
-                            Encoding enc = Encoding.GetEncoding(mc[i].Groups[4].Value);
-                            String encoding = mc[i].Groups[5].Value.ToUpper();
-                            encodedTextByteStart = lastEnd + Encoding.ASCII.GetByteCount(ascii);
-                            int encodedTextByteEnd = Utilities.IndexOfArray(bodyBytes, matchEnd, encodedTextByteStart);
-                            body.Append(enc.GetString(bodyBytes, encodedTextByteStart, encodedTextByteEnd - encodedTextByteStart));
-                            lastEnd = encodedTextByteEnd;
+                            int length = end_pos - start_pos;
+                            if (length > 0)
+                            {
+                                charset = temp_body.Substring(start_pos, length).Replace(";", "");
+                                if (charset != "" && !charset.Contains("binaryname") && charset != temp_charset)
+                                    temp_charset = charset;
+                            }
                         }
                     }
+                    body.Append(System.Text.Encoding.GetEncoding(temp_charset).GetString(buffer, 0, read));
+                    /*try
+                    {
+                        body.Append(System.Text.Encoding.GetEncoding(temp_charset).GetString(buffer, 0, read));
+                    }
+                    catch
+                    {
+                        temp_charset = Encoding.Default.BodyName;
+                        body.Append(System.Text.Encoding.GetEncoding(temp_charset).GetString(buffer, 0, read));
+                    }*/
+                    remaining -= read;
                 }
-                if (lastEnd < bodyBytes.Length) { body.Append(Encoding.ASCII.GetString(bodyBytes, lastEnd, bodyBytes.Length - lastEnd)); }
+
                 var next = Convert.ToChar(_Stream.ReadByte());
                 System.Diagnostics.Debug.Assert(next == ')');
 

@@ -280,7 +280,10 @@ namespace MailChecker
                     myThreads.Add(new Thread(new ThreadStart(account.Check_ForUnseenMails)));
                 }
                 foreach (Thread thread in myThreads)
+                {
+                    thread.SetApartmentState(System.Threading.ApartmentState.STA);
                     thread.Start();  //let's rock!
+                }
             }
             catch (Exception e)
             {
@@ -325,7 +328,7 @@ namespace MailChecker
                             {
                                 //Schedule unseen messages for alert
                                 myAlertForm.DateFormat = myIni.Get_LanguageValue("settings", "date_format");
-                                myAlertForm.AlertMessages.Add(new Account.UnseenMessage(message.MessageId, message.FromDisplayName, message.Subject, message.Body, message.AttachmentsCount, message.Date, false));
+                                myAlertForm.AlertMessages.Add(new Account.UnseenMessage(message.MessageId, message.FromDisplayName, message.Subject, message.Body, message.AttachmentsCount, message.Date));
                                 myAlertedMessages.Add(message.MessageId);
                             }
                     if (account.Status != "")

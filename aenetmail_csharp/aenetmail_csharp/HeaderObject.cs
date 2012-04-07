@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web;
 
 namespace aenetmail_csharp
 {
@@ -54,7 +55,6 @@ namespace aenetmail_csharp
             if (ContentTransferEncoding.Is("quoted-printable"))
             {
                 value = Utilities.DecodeQuotedPrintable(value, Utilities.ParseCharsetToEncoding(Charset));
-
             }
             else if (ContentTransferEncoding.Is("base64")
                 //only decode the content if it is a text document
@@ -68,6 +68,8 @@ namespace aenetmail_csharp
 
                 ContentTransferEncoding = string.Empty;
             }
+            if (ContentType.Contains("html"))
+                value = Utilities.ConvertHTML2Text(value);
 
             Body = value;
         }

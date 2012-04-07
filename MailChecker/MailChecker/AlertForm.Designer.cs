@@ -98,7 +98,7 @@
                             | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lblSubject.ForeColor = System.Drawing.Color.Black;
             this.lblSubject.Location = new System.Drawing.Point(12, 31);
-            this.lblSubject.MaximumSize = new System.Drawing.Size(340, 70);
+            this.lblSubject.MaximumSize = new System.Drawing.Size(330, 70);
             this.lblSubject.Name = "lblSubject";
             this.lblSubject.Size = new System.Drawing.Size(43, 14);
             this.lblSubject.TabIndex = 5;

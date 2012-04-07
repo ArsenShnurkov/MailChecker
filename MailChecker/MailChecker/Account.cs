@@ -18,7 +18,7 @@ namespace MailChecker
             public DateTime Date { get; set; }
             public bool Alerted { get; set; }
 
-            public UnseenMessage(string message_id, string from_display_name, string subject, string body, int attachment_count, DateTime date, bool alerted)
+            public UnseenMessage(string message_id, string from_display_name, string subject, string body, int attachment_count, DateTime date)
             {
                 MessageId = message_id;
                 FromDisplayName = from_display_name;
@@ -26,7 +26,6 @@ namespace MailChecker
                 Body = body;
                 AttachmentsCount = attachment_count;
                 Date = date;
-                Alerted = alerted;
             }
         }
 
@@ -83,7 +82,8 @@ namespace MailChecker
                     string from_display_name = message.From.DisplayName;
                     string subject = message.Subject;
                     string body = message.Body;
-                    UnseenMessages.Add(new UnseenMessage(message.MessageID, from_display_name, subject, body, message.Attachments.Count, message.Date, false));
+
+                    UnseenMessages.Add(new UnseenMessage(message.MessageID, from_display_name, subject, body, message.Attachments.Count, message.Date));
                 }
 
                 Status = "";
@@ -94,7 +94,6 @@ namespace MailChecker
                 Status = e.Message;
             }
         }
-        
         private List<MailMessage> Fetch_UnseenMails(ImapClient client)
         {
             try
@@ -105,9 +104,6 @@ namespace MailChecker
                 System.Lazy<MailMessage>[] myMessages = client.SearchMessages(aenetmail_csharp.Imap.SearchCondition.Unseen());
                 foreach (System.Lazy<MailMessage> message in myMessages)
                     myMsg.Add(message.Value);
-                string charset = "";
-                foreach (MailMessage msg in myMsg)
-                    charset = msg.Charset;
                 return myMsg;
             }
             catch

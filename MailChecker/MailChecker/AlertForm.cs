@@ -24,7 +24,7 @@ namespace MailChecker
             AlertMessages = new List<Account.UnseenMessage>();
             Speed = 0.05;
             FadeInInterval = 20;
-            FadeOutInterval = 4000;
+            FadeOutInterval = 5000;
             MaxOpacity = 0.85;
             DateFormat = "yyyy-MM-dd";
 
