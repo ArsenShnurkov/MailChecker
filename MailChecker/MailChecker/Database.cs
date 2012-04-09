@@ -8,7 +8,7 @@ namespace MailChecker
 {
     public class Database
     {
-        public string DbFile { get; set; }
+        public string DbFile { get; private set; }
 
         public Database()
         {

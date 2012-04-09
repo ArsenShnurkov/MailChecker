@@ -60,15 +60,13 @@ namespace MailChecker
                 //Start program updater
                 Updater.Updater.Configurator myConfig = new Updater.Updater.Configurator();
                 myConfig.ApplicationName = AppDomain.CurrentDomain.FriendlyName.Replace(".exe", "");
+                myConfig.Version = Assembly.GetEntryAssembly().GetName().Version;
                 myConfig.Homepage = "https://sourceforge.net/projects/mailcheckerpro/";
                 myConfig.UpdateUrl = "https://sourceforge.net/projects/mailcheckerpro/files/";
                 myConfig.SupportEmail = "mihaly.sogorka@aol.com";
-                myConfig.VerMajor = Assembly.GetEntryAssembly().GetName().Version.Major;
-                myConfig.VerMinor = Assembly.GetEntryAssembly().GetName().Version.Minor;
-                myConfig.VerBuild = Assembly.GetEntryAssembly().GetName().Version.Build;
-                myConfig.VerRevision = Assembly.GetEntryAssembly().GetName().Version.Revision;
                 myConfig.ConfirmDownload = true;
                 myConfig.UpdateInterval = 10;
+                LoadExternalDlls(ref myConfig);  //external dlls
                 myUpdater = new Updater.Updater(myConfig);
                 myUpdater.Start();
             }
@@ -119,6 +117,28 @@ namespace MailChecker
             //Set timer interval
             tmrCheckAccounts.Interval = myCommon.ConvertMinute2Milliseconds(myDatabase.Get_SavedTimerInterval());
             tmrCheckAccounts.Enabled = true;
+        }
+        private void LoadExternalDlls(ref Updater.Updater.Configurator myConfig)
+        {
+            List<string> ExternalDlls = new List<string>();
+            ExternalDlls.Add("aenetmail_csharp.dll");
+            ExternalDlls.Add("Ini.dll");
+            ExternalDlls.Add("System.Data.SQLite.dll");
+            ExternalDlls.Add("Updater.dll");
+
+            foreach (string dll in ExternalDlls)
+            {
+                Assembly assembly = Assembly.LoadFrom(dll);
+                string fullname = assembly.FullName.ToLower();
+                string pattern = "version=";
+                int pos = fullname.IndexOf(pattern) + pattern.Length;
+                int length = fullname.IndexOf(",", pos) - pos;
+                if (pos != -1 && length > 0)
+                {
+                    string version = fullname.Substring(pos, length);
+                    myConfig.ExternalDlls.Add(new Updater.Updater.Configurator.ExternalDll(dll, version));
+                }
+            }
         }
 
         private void MainForm_Load(object sender, EventArgs e)

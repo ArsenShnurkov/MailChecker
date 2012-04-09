@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+//using System.Collections.Generic;
+//using System.Linq;
 using System.Text;
-using System.ComponentModel;
+//using System.ComponentModel;
 
 namespace aenetmail_csharp
 {
@@ -10,17 +10,8 @@ namespace aenetmail_csharp
     {
         public string Filename
         {
-            get { return Headers["Content-Disposition"]["filename"]; }
+            get { return Headers["Content-Disposition"]["filename"].NotEmpty(Headers["Content-Disposition"]["name"]); }
         }
-
-        [Obsolete("Use ContentTransferEncoding instead"), EditorBrowsable(EditorBrowsableState.Never)]
-        public string ContentEncoding { get { return ContentTransferEncoding; } set { ContentTransferEncoding = value; } }
-
-        [Obsolete("Use Body instead"), EditorBrowsable(EditorBrowsableState.Never)]
-        public string Content { get { return Body; } set { SetBody(value); } }
-
-        [Obsolete("Use GetData instead"), EditorBrowsable(EditorBrowsableState.Never)]
-        public byte[] GetContent() { return GetData(); }
 
         private string _ContentDisposition;
         private string ContentDisposition
@@ -30,7 +21,7 @@ namespace aenetmail_csharp
 
         public bool OnServer { get; internal set; }
 
-        public bool IsAttachment
+        internal bool IsAttachment
         {
             get
             {
@@ -61,12 +52,12 @@ namespace aenetmail_csharp
                 }
                 catch (Exception)
                 {
-                    data = System.Text.Encoding.UTF8.GetBytes(Body);
+                    data = Encoding.GetBytes(Body);
                 }
             }
             else
             {
-                data = System.Text.Encoding.UTF8.GetBytes(Body);
+                data = Encoding.GetBytes(Body);
             }
             return data;
         }

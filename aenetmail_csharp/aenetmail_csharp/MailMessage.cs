@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
@@ -84,7 +82,6 @@ namespace aenetmail_csharp
         public string Raw { get; private set; }
         public MailPriority Importance { get; set; }
 
-
         public void Load(string message, bool headersOnly = false)
         {
             Raw = message;
@@ -148,6 +145,17 @@ namespace aenetmail_csharp
                 }
             }
 
+            if (string.IsNullOrWhiteSpace(Body) && AlternateViews.Count == 0)
+            {
+                int i = 0;
+                foreach (Attachment attach in Attachments)
+                {
+                    i++;
+                    if (i == 1)
+                        SetBody(attach.BodyParsed);
+                }
+            }
+
             Date = Headers.GetDate();
             To = Headers.GetAddresses("To").ToList();
             Cc = Headers.GetAddresses("Cc").ToList();
@@ -159,20 +167,6 @@ namespace aenetmail_csharp
 
             Importance = Headers.GetEnum<MailPriority>("Importance");
             Subject = Headers["Subject"].RawValue;
-        }
-
-        [Obsolete("Use Body instead--check content-type to determine if it's HTML.  If HTML is needed, find an attachment in AlternateViews with a text/html content-type."), EditorBrowsable(EditorBrowsableState.Never)]
-        public string BodyHtml
-        {
-            get
-            {
-                if (ContentType.Contains("html"))
-                    return Body;
-                return AlternateViews
-                  .Where(x => x.ContentType.Contains("html"))
-                  .Select(x => x.Body)
-                  .FirstOrDefault();
-            }
         }
 
         private void ParseMime(TextReader reader, string boundary)
@@ -189,7 +183,7 @@ namespace aenetmail_csharp
             while (data != null && !data.StartsWith(bounderOuter))
             {
                 data = reader.ReadLine();
-                var a = new Attachment();
+                var a = new Attachment { Encoding = Encoding };
 
                 var part = new StringBuilder();
                 // read part header

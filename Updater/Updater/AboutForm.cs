@@ -13,11 +13,18 @@ namespace Updater
             InitializeComponent();
 
             myUpdater = updater;
+            lblStatus.Text = "";
             lblTitle.Text = myUpdater.UpdaterConfigurator.ApplicationName;
-            lblVersion.Text = myUpdater.UpdaterConfigurator.VerMajor + "." + myUpdater.UpdaterConfigurator.VerMinor + "." + 
-                              myUpdater.UpdaterConfigurator.VerBuild + "." + myUpdater.UpdaterConfigurator.VerRevision;
+            lblVersion.Text = myUpdater.UpdaterConfigurator.Version.ToString();
             linkLblHome.Text = myUpdater.UpdaterConfigurator.Homepage;
             linkLblSupport.Text = myUpdater.UpdaterConfigurator.SupportEmail;
+            //external dlls
+            lblExtDlls.Text = "";
+            foreach (Updater.Configurator.ExternalDll ext_dll in myUpdater.UpdaterConfigurator.ExternalDlls)
+                if (lblExtDlls.Text == "")
+                    lblExtDlls.Text = ext_dll.Name + ": " + ext_dll.Version.ToString();
+                else
+                    lblExtDlls.Text += ("\r\n" + ext_dll.Name + ": " + ext_dll.Version);
         }
 
         private void tmrStatusRefresh_Tick(object sender, EventArgs e)

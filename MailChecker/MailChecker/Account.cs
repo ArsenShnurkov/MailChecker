@@ -10,12 +10,12 @@ namespace MailChecker
     {
         public class UnseenMessage
         {
-            public string MessageId { get; set; }
-            public string FromDisplayName { get; set; }
-            public string Subject { get; set; }
-            public string Body { get; set; }
-            public int AttachmentsCount { get; set; }
-            public DateTime Date { get; set; }
+            public string MessageId { get; private set; }
+            public string FromDisplayName { get; private set; }
+            public string Subject { get; private set; }
+            public string Body { get; private set; }
+            public int AttachmentsCount { get; private set; }
+            public DateTime Date { get; private set; }
             public bool Alerted { get; set; }
 
             public UnseenMessage(string message_id, string from_display_name, string subject, string body, int attachment_count, DateTime date)
@@ -32,12 +32,12 @@ namespace MailChecker
         public string Host { get; set; }
         public int Port { get; set; }
         public bool UseSsl { get; set; }
-        public string Email { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public string Status { get; set; }
-        public bool Finished { get; set; }
-        public List<UnseenMessage> UnseenMessages { get; set; }
+        public string Email { get; private set; }
+        public string Username { get; private set; }
+        public string Password { get; private set; }
+        public string Status { get; private set; }
+        public bool Finished { get; private set; }
+        public List<UnseenMessage> UnseenMessages { get; private set; }
 
         public Account(string email, string username, string password)
         {
@@ -79,9 +79,9 @@ namespace MailChecker
                 List<MailMessage> myMessages = Fetch_UnseenMails(myImapClient);
                 foreach (MailMessage message in myMessages)
                 {
-                    string from_display_name = message.From.DisplayName;
+                    string from_display_name = Examine_FromDisplayName(message);
                     string subject = message.Subject;
-                    string body = message.Body;
+                    string body = Examine_Body(message);
 
                     UnseenMessages.Add(new UnseenMessage(message.MessageID, from_display_name, subject, body, message.Attachments.Count, message.Date));
                 }
@@ -111,6 +111,29 @@ namespace MailChecker
                 List<MailMessage> myMessages = new List<MailMessage>();
                 return myMessages;
             }
+        }
+        private string Examine_Body(MailMessage msg)
+        {
+            string body = "";
+            if (msg.BodyParsed != null)
+                body = msg.BodyParsed;
+            else
+                body = msg.Body;
+            foreach (Attachment view in msg.AlternateViews)
+            {
+                if (view.ContentType.ToLower().Contains("html") && view.BodyParsed != null)
+                    return view.BodyParsed;
+            }
+
+            return body;
+        }
+        private string Examine_FromDisplayName(MailMessage msg)
+        {
+            string from = msg.From.DisplayName;
+            if (from == "")
+                return msg.From.Address;
+
+            return from;
         }
     }
 }

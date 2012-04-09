@@ -15,11 +15,12 @@ namespace aenetmail_csharp
             try
             {
                 string result;
+                result = source;
 
                 // Remove HTML Development formatting
                 // Replace line breaks with space
                 // because browsers inserts space
-                result = source.Replace("\r", " ");
+                result = result.Replace("\r", " ");
                 // Replace line breaks with space
                 // because browsers inserts space
                 result = result.Replace("\n", " ");
@@ -175,6 +176,9 @@ namespace aenetmail_csharp
                     breaks = breaks + "\r";
                     tabs = tabs + "\t";
                 }
+
+                //remove white-space characters
+                result = result.Trim();
 
                 // That's it.
                 return result;
@@ -705,33 +709,45 @@ namespace aenetmail_csharp
         {
             if (encoding == null)
             {
-                encoding = System.Text.Encoding.UTF8;
+                encoding = System.Text.Encoding.Default;
             }
 
-            value = Regex.Replace(value, @"\=[\r\n]+", string.Empty, RegexOptions.Singleline);
-            var matches = Regex.Matches(value, @"(\=[0-9A-F]{2}){1,2}");
-            foreach (var match in matches.Cast<Match>().Reverse())
+            if (value.IndexOf('_') > -1 && value.IndexOf(' ') == -1)
+                value = value.Replace('_', ' ');
+
+            var data = System.Text.Encoding.ASCII.GetBytes(value);
+            var eq = Convert.ToByte('=');
+            var n = 0;
+            for (int i = 0; i < data.Length; i++)
             {
+                var b = data[i];
 
-                int ascii;
-                try
+                if (b == eq)
                 {
-                    ascii = int.Parse(match.Value.Replace("=", string.Empty), System.Globalization.NumberStyles.HexNumber);
+                    byte b1 = data[i + 1], b2 = data[i + 2];
+                    if (b1 == 10 || b1 == 13)
+                    {
+                        i++;
+                        if (b2 == 10 || b2 == 13)
+                        {
+                            i++;
+                        }
+                        continue;
+                    }
+
+                    data[n] = (byte)int.Parse(value.Substring(i + 1, 2), NumberStyles.HexNumber);
+                    n++;
+                    i += 2;
+
                 }
-                catch (Exception ex)
+                else
                 {
-                    throw new Exception("Failed parsing \"" + match.Value + "\" as an integer", ex);
+                    data[n] = b;
+                    n++;
                 }
-
-                //http://stackoverflow.com/questions/1318933/c-sharp-int-to-byte
-                var result = BitConverter.GetBytes(ascii);
-                if (BitConverter.IsLittleEndian)
-                    Array.Reverse(result);
-
-                value = value.Substring(0, match.Index)
-                 + encoding.GetString(result).Trim('\0')
-                 + value.Substring(match.Index + match.Length);
             }
+
+            value = encoding.GetString(data, 0, n);
             return value;
         }
         internal static string DecodeBase64(string data, Encoding encoding = null)
@@ -741,11 +757,11 @@ namespace aenetmail_csharp
                 return data;
             }
             var bytes = Convert.FromBase64String(data);
-            return (encoding ?? System.Text.Encoding.UTF8).GetString(bytes);
+            return (encoding ?? System.Text.Encoding.Default).GetString(bytes);
         }
 
         #region OpenPOP.NET
-        internal static string DecodeWords(string encodedWords)
+        internal static string DecodeWords(string encodedWords, Encoding @default = null)
         {
             if (string.IsNullOrEmpty(encodedWords))
                 return string.Empty;
@@ -774,8 +790,41 @@ namespace aenetmail_csharp
                     continue;
 
                 string fullMatchValue = match.Value;
-                System.Net.Mail.Attachment attachment = System.Net.Mail.Attachment.CreateAttachmentFromString("", fullMatchValue);
-                string decodedText = attachment.Name;
+
+                string encodedText = match.Groups["Content"].Value;
+                string encoding = match.Groups["Encoding"].Value;
+                string charset = match.Groups["Charset"].Value;
+
+                // Get the encoding which corrosponds to the character set
+                Encoding charsetEncoding = ParseCharsetToEncoding(charset, @default);
+
+                // Store decoded text here when done
+                string decodedText;
+
+                // Encoding may also be written in lowercase
+                switch (encoding.ToUpperInvariant())
+                {
+                    // RFC:
+                    // The "B" encoding is identical to the "BASE64" 
+                    // encoding defined by RFC 2045.
+                    // http://tools.ietf.org/html/rfc2045#section-6.8
+                    case "B":
+                        decodedText = DecodeBase64(encodedText, charsetEncoding);
+                        break;
+
+                    // RFC:
+                    // The "Q" encoding is similar to the "Quoted-Printable" content-
+                    // transfer-encoding defined in RFC 2045.
+                    // There are more details to this. Please check
+                    // http://tools.ietf.org/html/rfc2047#section-4.2
+                    // 
+                    case "Q":
+                        decodedText = DecodeQuotedPrintable(encodedText, charsetEncoding);
+                        break;
+
+                    default:
+                        throw new ArgumentException("The encoding " + encoding + " was not recognized");
+                }
 
                 // Repalce our encoded value with our decoded value
                 decodedWords = decodedWords.Replace(fullMatchValue, decodedText);
@@ -790,10 +839,10 @@ namespace aenetmail_csharp
         /// <param name="characterSet">The character set to parse</param>
         /// <returns>An encoding which corresponds to the character set</returns>
         /// <exception cref="ArgumentNullException">If <paramref name="characterSet"/> is <see langword="null"/></exception>
-        public static Encoding ParseCharsetToEncoding(string characterSet)
+        public static Encoding ParseCharsetToEncoding(string characterSet, Encoding @default)
         {
             if (string.IsNullOrEmpty(characterSet))
-                return null;
+                return @default ?? Encoding.Default;
 
             string charSetUpper = characterSet.ToUpperInvariant();
             if (charSetUpper.Contains("WINDOWS") || charSetUpper.Contains("CP"))
@@ -806,13 +855,16 @@ namespace aenetmail_csharp
                 // Now we hope the only thing left in the characterSet is numbers.
                 int codepageNumber = int.Parse(charSetUpper, System.Globalization.CultureInfo.InvariantCulture);
 
-                return Encoding.GetEncoding(codepageNumber);
+                return Encoding.GetEncodings().Where(x => x.CodePage == codepageNumber)
+                  .Select(x => x.GetEncoding()).FirstOrDefault() ?? @default ?? Encoding.Default;
             }
 
             // It seems there is no codepage value in the characterSet. It must be a named encoding
-            return Encoding.GetEncoding(characterSet);
+            return Encoding.GetEncodings().Where(x => x.Name.Is(characterSet))
+              .Select(x => x.GetEncoding()).FirstOrDefault() ?? @default ?? System.Text.Encoding.Default;
         }
         #endregion
+
 
         #region IsValidBase64
         //stolen from http://stackoverflow.com/questions/3355407/validate-string-is-base64-format-using-regex

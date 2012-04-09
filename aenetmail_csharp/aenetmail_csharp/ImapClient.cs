@@ -19,7 +19,7 @@ namespace aenetmail_csharp
         public bool UseSsl { get; set; }
         public bool SkipSslValidation { get; set; }
         public AuthMethods AuthMethod { get; set; }
-        
+
         public enum AuthMethods
         {
             Login,
@@ -504,7 +504,7 @@ namespace aenetmail_csharp
                 if (response[0] != '*' || !response.Contains("FETCH ("))
                     continue;
 
-                var mail = new MailMessage();
+                var mail = new MailMessage { Encoding = Encoding };
                 var imapHeaders = ParseImapHeader(response.Substring(response.IndexOf('(') + 1));
                 mail.Size = (imapHeaders["BODY[HEADER]"] ?? imapHeaders["BODY[]"]).Trim('{', '}').ToInt();
 
@@ -514,59 +514,61 @@ namespace aenetmail_csharp
                 if (imapHeaders["Flags"] != null)
                     mail.SetFlags(imapHeaders["Flags"]);
 
+
                 foreach (var key in imapHeaders.AllKeys.Except(new[] { "UID", "Flags", "BODY[]", "BODY[HEADER]" }, StringComparer.OrdinalIgnoreCase))
                     mail.Headers.Add(key, new HeaderValue(imapHeaders[key]));
 
-                var body = new StringBuilder();
-                int remaining = mail.Size;
-                var buffer = new byte[8192];
-                int read;
-                string pattern = "charset=";
-                string temp_charset = Encoding.Default.BodyName;
-                string charset = "";
-                while (remaining > 0)
+                using (var body = new System.IO.MemoryStream())
                 {
-                    read = _Stream.Read(buffer, 0, Math.Min(remaining, buffer.Length));
-                    string temp_body = System.Text.Encoding.GetEncoding(temp_charset).GetString(buffer, 0, read);
-                    temp_body = temp_body.Replace("\"", "").Replace(" ", "");
-                    if (temp_body.ToLower().Contains(pattern))
+                    int remaining = mail.Size;
+                    var buffer = new byte[8192];
+                    int read;
+                    string pattern = "charset=";
+                    string charset = "";
+                    string temp_charset = Encoding.BodyName;
+                    while (remaining > 0)
                     {
-                        int start_pos = temp_body.IndexOf(pattern) + pattern.Length;
-                        int end_pos = temp_body.IndexOf("\r\n", start_pos);
-                        if (end_pos == -1)
+                        read = _Stream.Read(buffer, 0, Math.Min(remaining, buffer.Length));
+                        string temp_body = Encoding.GetString(buffer, 0, read);
+                        temp_body = temp_body.Replace("\"", "").Replace(" ", "");
+                        if (temp_body.ToLower().Contains(pattern))
                         {
-                            end_pos = temp_body.IndexOf("\r", start_pos);
+                            int start_pos = temp_body.IndexOf(pattern) + pattern.Length;
+                            int end_pos = temp_body.IndexOf("\r\n", start_pos);
                             if (end_pos == -1)
-                                end_pos = temp_body.IndexOf(";", start_pos);
-                        }
-                        if (end_pos != -1)
-                        {
-                            int length = end_pos - start_pos;
-                            if (length > 0)
                             {
-                                charset = temp_body.Substring(start_pos, length).Replace(";", "");
-                                if (charset != "" && !charset.Contains("binaryname") && charset != temp_charset)
-                                    temp_charset = charset;
+                                end_pos = temp_body.IndexOf("\r", start_pos);
+                                if (end_pos == -1)
+                                    end_pos = temp_body.IndexOf(";", start_pos);
+                            }
+                            if (end_pos != -1)
+                            {
+                                int length = end_pos - start_pos;
+                                if (length > 0)
+                                {
+                                    charset = temp_body.Substring(start_pos, length).Replace(";", "");
+                                    if (charset != "" && !charset.Contains("binaryname") && charset != temp_charset)
+                                    {
+                                        Encoding = Utilities.ParseCharsetToEncoding(charset, Encoding);
+                                        temp_charset = Encoding.BodyName;
+                                    }
+                                }
                             }
                         }
+
+                        body.Write(buffer, 0, read);
+                        remaining -= read;
                     }
-                    body.Append(System.Text.Encoding.GetEncoding(temp_charset).GetString(buffer, 0, read));
-                    /*try
+
+                    var next = Convert.ToChar(_Stream.ReadByte());
+                    System.Diagnostics.Debug.Assert(next == ')');
+
+                    body.Position = 0;
+                    using (var rdr = new System.IO.StreamReader(body, Encoding))
                     {
-                        body.Append(System.Text.Encoding.GetEncoding(temp_charset).GetString(buffer, 0, read));
+                        mail.Load(rdr, headersonly);
                     }
-                    catch
-                    {
-                        temp_charset = Encoding.Default.BodyName;
-                        body.Append(System.Text.Encoding.GetEncoding(temp_charset).GetString(buffer, 0, read));
-                    }*/
-                    remaining -= read;
                 }
-
-                var next = Convert.ToChar(_Stream.ReadByte());
-                System.Diagnostics.Debug.Assert(next == ')');
-
-                mail.Load(body.ToString(), headersonly);
 
                 x.Add(mail);
             }

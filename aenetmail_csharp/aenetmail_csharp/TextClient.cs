@@ -19,7 +19,6 @@ namespace aenetmail_csharp
 
         public TextClient()
         {
-            //Encoding = System.Text.Encoding.UTF8;
             Encoding = System.Text.Encoding.Default;
         }
 

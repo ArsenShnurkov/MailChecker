@@ -31,7 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutForm));
             this.lblVersion = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.lblTitle = new System.Windows.Forms.Label();
             this.btnCheckForUpdates = new System.Windows.Forms.Button();
             this.linkLblSupport = new System.Windows.Forms.LinkLabel();
@@ -41,12 +40,15 @@
             this.tmrStatusRefresh = new System.Windows.Forms.Timer(this.components);
             this.lblHome = new System.Windows.Forms.Label();
             this.linkLblHome = new System.Windows.Forms.LinkLabel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.lblExtDlls = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // lblVersion
             // 
             this.lblVersion.AutoSize = true;
+            this.lblVersion.BackColor = System.Drawing.Color.Transparent;
             this.lblVersion.Font = new System.Drawing.Font("Calibri", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lblVersion.Location = new System.Drawing.Point(165, 41);
             this.lblVersion.Name = "lblVersion";
@@ -54,19 +56,10 @@
             this.lblVersion.TabIndex = 0;
             this.lblVersion.Text = "0.0.0.0";
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(12, 12);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(142, 65);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 3;
-            this.pictureBox1.TabStop = false;
-            // 
             // lblTitle
             // 
             this.lblTitle.AutoSize = true;
+            this.lblTitle.BackColor = System.Drawing.Color.Transparent;
             this.lblTitle.Font = new System.Drawing.Font("Calibri", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lblTitle.Location = new System.Drawing.Point(160, 9);
             this.lblTitle.Name = "lblTitle";
@@ -87,6 +80,7 @@
             // linkLblSupport
             // 
             this.linkLblSupport.AutoSize = true;
+            this.linkLblSupport.BackColor = System.Drawing.Color.Transparent;
             this.linkLblSupport.Location = new System.Drawing.Point(64, 144);
             this.linkLblSupport.Name = "linkLblSupport";
             this.linkLblSupport.Size = new System.Drawing.Size(111, 13);
@@ -97,25 +91,29 @@
             // lblSupport
             // 
             this.lblSupport.AutoSize = true;
+            this.lblSupport.BackColor = System.Drawing.Color.Transparent;
+            this.lblSupport.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lblSupport.Location = new System.Drawing.Point(11, 144);
             this.lblSupport.Name = "lblSupport";
-            this.lblSupport.Size = new System.Drawing.Size(47, 13);
+            this.lblSupport.Size = new System.Drawing.Size(55, 13);
             this.lblSupport.TabIndex = 10;
             this.lblSupport.Text = "Support:";
             // 
             // lblStatus
             // 
             this.lblStatus.AutoSize = true;
+            this.lblStatus.BackColor = System.Drawing.Color.Transparent;
             this.lblStatus.Font = new System.Drawing.Font("Calibri", 8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lblStatus.Location = new System.Drawing.Point(12, 109);
+            this.lblStatus.Location = new System.Drawing.Point(14, 109);
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(0, 13);
+            this.lblStatus.Size = new System.Drawing.Size(96, 13);
             this.lblStatus.TabIndex = 11;
+            this.lblStatus.Text = "%UPDATE_STATUS%";
             // 
             // btnClose
             // 
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnClose.Location = new System.Drawing.Point(276, 182);
+            this.btnClose.Location = new System.Drawing.Point(274, 234);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 12;
@@ -129,15 +127,18 @@
             // lblHome
             // 
             this.lblHome.AutoSize = true;
+            this.lblHome.BackColor = System.Drawing.Color.Transparent;
+            this.lblHome.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lblHome.Location = new System.Drawing.Point(25, 131);
             this.lblHome.Name = "lblHome";
-            this.lblHome.Size = new System.Drawing.Size(33, 13);
+            this.lblHome.Size = new System.Drawing.Size(37, 13);
             this.lblHome.TabIndex = 14;
             this.lblHome.Text = "Web:";
             // 
             // linkLblHome
             // 
             this.linkLblHome.AutoSize = true;
+            this.linkLblHome.BackColor = System.Drawing.Color.Transparent;
             this.linkLblHome.Location = new System.Drawing.Point(64, 131);
             this.linkLblHome.Name = "linkLblHome";
             this.linkLblHome.Size = new System.Drawing.Size(46, 13);
@@ -146,11 +147,36 @@
             this.linkLblHome.Text = "Website";
             this.linkLblHome.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLblHome_LinkClicked);
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.SystemColors.Control;
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(12, 12);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(142, 65);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 3;
+            this.pictureBox1.TabStop = false;
+            // 
+            // lblExtDlls
+            // 
+            this.lblExtDlls.AutoSize = true;
+            this.lblExtDlls.BackColor = System.Drawing.Color.Transparent;
+            this.lblExtDlls.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lblExtDlls.Location = new System.Drawing.Point(7, 179);
+            this.lblExtDlls.Name = "lblExtDlls";
+            this.lblExtDlls.Size = new System.Drawing.Size(113, 13);
+            this.lblExtDlls.TabIndex = 15;
+            this.lblExtDlls.Text = "%EXTERNAL_DLLS%";
+            // 
             // AboutForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(354, 208);
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ClientSize = new System.Drawing.Size(354, 262);
+            this.Controls.Add(this.lblExtDlls);
             this.Controls.Add(this.lblHome);
             this.Controls.Add(this.linkLblHome);
             this.Controls.Add(this.btnClose);
@@ -161,7 +187,7 @@
             this.Controls.Add(this.lblTitle);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.lblVersion);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "AboutForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
@@ -187,6 +213,7 @@
         private System.Windows.Forms.Timer tmrStatusRefresh;
         private System.Windows.Forms.Label lblHome;
         private System.Windows.Forms.LinkLabel linkLblHome;
+        private System.Windows.Forms.Label lblExtDlls;
 
     }
 }

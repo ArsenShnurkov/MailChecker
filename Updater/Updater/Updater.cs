@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Collections.Generic;
 
 namespace Updater
@@ -7,19 +8,47 @@ namespace Updater
     {
         public class Configurator
         {
+            public class ExternalDll
+            {
+                public ExternalDll(string name, string version)
+                {
+                    Name = name;
+                    Version = version;
+                }
+
+                public string Name { get; set; }
+                public string Version { get; set; }
+            }
+
+            private Version _version;
+
             public Configurator()
             {
+                ExternalDlls = new List<ExternalDll>();
                 UpdateInterval = 10;  //checks for update in every 10 minutes (default)
             }
 
+            public List<ExternalDll> ExternalDlls { get; set; }
+            public Version Version
+            {
+                get { return _version; }
+                set
+                {
+                    _version = value;
+                    VerMajor = value.Major;
+                    VerMinor = value.Minor;
+                    VerBuild = value.Build;
+                    VerRevision = value.Revision;
+                }
+            }
             public string ApplicationName { get; set; }
             public string Homepage { get; set; }
             public string SupportEmail { get; set; }
             public string UpdateUrl { get; set; }
-            public int VerMajor { get; set; }
-            public int VerMinor { get; set; }
-            public int VerBuild { get; set; }
-            public int VerRevision { get; set; }
+            public int VerMajor { get; private set; }
+            public int VerMinor { get; private set; }
+            public int VerBuild { get; private set; }
+            public int VerRevision { get; private set; }
             public int UpdateInterval { get; set; }
             public bool ConfirmDownload { get; set; }
         }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Net.Mail;
 using System.Text.RegularExpressions;
 
@@ -177,11 +176,9 @@ namespace aenetmail_csharp
                 }
             }
         }
-
-
-        public static HeaderDictionary Parse(string headers)
+        public static HeaderDictionary Parse(string headers, System.Text.Encoding encoding)
         {
-            headers = Utilities.DecodeWords(headers);
+            headers = Utilities.DecodeWords(headers, encoding);
             var temp = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             var lines = headers.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
             int i;
